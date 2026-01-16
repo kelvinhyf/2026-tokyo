@@ -200,14 +200,17 @@
 
                 const initMap = () => {
                     // 初始化 Leaflet
-                    map = L.map('map', {zoomControl: false}).setView([35.1036, 139.0777], 10);
-                    
-                    // 【關鍵修改】改用 Google Maps 圖層連結 (使用 https)
-                    // lyrs=m: 一般地圖, lyrs=y: 衛星混合, lyrs=p: 地形
-                    L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-                        attribution: 'Google Maps',
-                        maxZoom: 20
-                    }).addTo(map);
+map = L.map('map', {zoomControl: false}).setView([35.1036, 139.0777], 10);
+
+// 改用 Google Maps 高畫質圖層 (HD)
+// scale=2 代表請求雙倍解析度，tileSize: 512 告訴程式圖片變大了
+L.tileLayer('https://mt1.google.com/vt/lyrs=m&scale=2&x={x}&y={y}&z={z}', {
+    attribution: 'Google Maps',
+    maxZoom: 20,
+    tileSize: 512,      // 重要：設定圖磚大小為 512 (原本是 256)
+    zoomOffset: -1      // 重要：修正縮放比例，不然字會變得超大
+}).addTo(map);
+
                     
                     updateMarkers(0);
                 };
